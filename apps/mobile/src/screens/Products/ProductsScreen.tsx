@@ -6,12 +6,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { API_URL } from '../../services/api';
 import { useTranslation } from '../../i18n/useTranslation';
 import { useCatalogStore } from '../../store/catalogStore';
+import { useTheme } from '../../theme/useTheme';
 
 import { useIsFocused } from '@react-navigation/native';
 
 export default function ProductsScreen({ navigation }: any) {
   const isFocused = useIsFocused();
-
+  const { isDark } = useTheme();
   const { t } = useTranslation();
   const { user, profileData } = useAuthStore();
   const { products, removeProduct } = useCatalogStore();
@@ -83,7 +84,7 @@ export default function ProductsScreen({ navigation }: any) {
   if (!isFocused) return null;
 
   return (
-    <View style={s.container}>
+    <View style={[s.container, { backgroundColor: isDark ? '#0B0F19' : '#FAF8F1' }]}>
       <View style={s.header}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableOpacity onPress={() => navigation.navigate('Home')} style={s.backBtn}>

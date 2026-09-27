@@ -35,6 +35,7 @@ const RolePillOverlay = () => {
   const { role } = useAuthStore();
   const { t } = useTranslation();
   const nav = useNavigation<any>();
+
   const roleKeys: any = { ARTISAN: "roles.artisan", BUYER: "roles.buyer", GOVT: "roles.govt" };
   const colors: any = { ARTISAN: "#394B72", BUYER: "#0F766E", GOVT: "#1E293B" };
   return (

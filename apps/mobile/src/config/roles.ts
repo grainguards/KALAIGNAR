@@ -35,7 +35,7 @@ export const ROLE_CONFIG: Record<string, RoleDef> = {
     tabs: [
       { name: 'Home', label: 'Home', iconActive: 'home', iconInactive: 'home-outline', component: HomeScreen },
       { name: 'Products', label: 'Products', iconActive: 'grid', iconInactive: 'grid-outline', component: ProductsScreen },
-      { name: 'Add Product', label: '', iconActive: 'add', iconInactive: 'add', component: AddProductScreen }, // Dummy for center button spacing
+      { name: 'Add Product', label: '', iconActive: 'add', iconInactive: 'add', component: AddProductScreen },
       { name: 'Buyers', label: 'Buyers', iconActive: 'people', iconInactive: 'people-outline', component: BuyersScreen },
       { name: 'Profile', label: 'Profile', iconActive: 'person', iconInactive: 'person-outline', component: ProfileScreen }
     ]

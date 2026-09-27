@@ -677,7 +677,7 @@ export default function AddProductScreen({ navigation, route }: any) {
   };
 
   return (
-    <ScrollView style={[s.pageBg, { backgroundColor: colors.background }]} contentContainerStyle={{ paddingBottom: 60, alignItems: 'center' }}>
+    <ScrollView style={[s.pageBg, { backgroundColor: isDark ? '#0B0F19' : '#FAF8F1' }]} contentContainerStyle={{ paddingBottom: 60, alignItems: 'center' }}>
       
       {/* Top Header matching AI Smart Catalog Studio */}
       <View style={[s.studioHeader, { backgroundColor: colors.surface, borderBottomColor: colors.border }]}>

@@ -106,7 +106,7 @@ export default function MainTabs() {
           tabBarInactiveTintColor: colors.textMuted,
           tabBarStyle: {
             display: 'flex',
-            backgroundColor: colors.surface,
+            backgroundColor: isDark ? '#151D2C' : '#FAF8F1',
             borderTopWidth: 1,
             borderTopColor: colors.border,
             elevation: 10,

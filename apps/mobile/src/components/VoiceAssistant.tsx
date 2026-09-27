@@ -119,9 +119,17 @@ export default function VoiceAssistant() {
           };
 
           recognition.onerror = (event: any) => {
-            console.error('Speech recognition error', event.error);
+            console.warn('Speech recognition event:', event.error);
             setIsListening(false);
-            setAiResponse('Speech recognition error. Please try again.');
+            if (event.error === 'no-speech') {
+              setAiResponse('No speech detected. Tap the mic and speak!');
+            } else if (event.error === 'not-allowed' || event.error === 'audio-capture') {
+              setAiResponse('Microphone access blocked. Please allow mic permissions in your browser bar.');
+            } else if (event.error === 'aborted') {
+              // Ignore manual abort
+            } else {
+              setAiResponse('Speech recognition error. Please try again.');
+            }
           };
           
           recognition.onend = () => {
@@ -293,13 +301,13 @@ export default function VoiceAssistant() {
       <TouchableOpacity 
         style={[
           styles.fab, 
-          { backgroundColor: isListening ? '#EF4444' : colors.primary }
+          { backgroundColor: isListening ? '#EF4444' : '#F97316' }
         ]} 
         onPress={handleVoicePress}
         disabled={isProcessing}
         accessibilityLabel={t('voice.micA11y') || 'Microphone'}
       >
-        <Ionicons name={isListening ? "stop" : "mic"} size={32} color="#FFFFFF" />
+        <Ionicons name={isListening ? "stop" : "mic"} size={30} color="#FFFFFF" />
       </TouchableOpacity>
     </View>
   );
@@ -308,18 +316,19 @@ export default function VoiceAssistant() {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 30,
-    alignSelf: 'center',
+    bottom: Platform.OS === 'ios' ? 95 : 85,
+    right: 24,
     zIndex: 9999,
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   widget: {
     width: 380,
+    maxWidth: '90%',
     minHeight: 180,
     borderRadius: 24,
     borderWidth: 1,
     padding: 24,
-    marginBottom: 24,
+    marginBottom: 16,
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
@@ -378,9 +387,9 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   fab: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 8,

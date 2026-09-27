@@ -81,15 +81,12 @@ export default function ProfileScreen() {
   if (!isFocused) return null;
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background }}>
-      {/* Role Pill Header */}
+    <View style={{ flex: 1, backgroundColor: isDark ? '#0B0F19' : '#FAF8F1' }}>
+      {/* Role Header */}
       <View style={{ backgroundColor: config.accentColor, paddingTop: Platform.OS === 'ios' ? 50 : 20, paddingBottom: 16, paddingHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', fontFamily: Platform.OS === 'ios' ? 'Georgia' : 'serif' }}>
           {t('nav.profile')}
         </Text>
-        <View style={{ backgroundColor: 'rgba(255,255,255,0.2)', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 100 }}>
-          <Text style={{ color: 'white', fontSize: 12, fontWeight: 'bold' }}>{t(config.label)}</Text>
-        </View>
       </View>
 
       <ScrollView contentContainerStyle={s.contentContainer}>
