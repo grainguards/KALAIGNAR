@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id              String    @id @default(uuid())
+  phone           String    @unique
+  name            String?
+  businessName    String?
+  language        String    @default("English")
+  location        String?
+  craftCategory   String?
+  experienceYears Int?
+  story           String?
+  profilePhotoUrl String?
+  isVerified      Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  products        Product[]
+  catalogs        Catalog[]
+}
+
+model Product {
+  id                String    @id @default(uuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id])
+  
+  status            String    @default("DRAFT") // DRAFT, PUBLISHED, OUT_OF_STOCK
+  
+  // Basic info
+  name              String?
+  price             Float?
+  suggestedPriceMin Float?
+  suggestedPriceMax Float?
+  quantity          Int       @default(1)
+  
+  // Details
+  category          String?
+  material          String?
+  dimensions        String?
+  weight            String?
+  craftOrigin       String?
+  
+  // AI Generated
+  descriptionEn     String?
+  descriptionLocal  String?
+  tags              String?
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  images            ProductImage[]
+  catalogItems      CatalogItem[]
+}
+
+model ProductImage {
+  id          String   @id @default(uuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  originalUrl String
+  enhancedUrl String?
+  isPrimary   Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+}
+
+model Buyer {
+  id          String   @id @default(uuid())
+  name        String
+  type        String   // RETAILER, WHOLESALER, BOUTIQUE, etc.
+  location    String
+  interests   String?
+  
+  createdAt   DateTime @default(now())
+  enquiries   Enquiry[]
+}
+
+model Enquiry {
+  id          String   @id @default(uuid())
+  productId   String
+  buyerId     String
+  buyer       Buyer    @relation(fields: [buyerId], references: [id])
+  
+  message     String
+  status      String   @default("PENDING") // PENDING, ACCEPTED, COMPLETED
+  
+  createdAt   DateTime @default(now())
+}
+
+model Catalog {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  
+  title       String
+  coverUrl    String?
+  
+  createdAt   DateTime @default(now())
+  items       CatalogItem[]
+}
+
+model CatalogItem {
+  id          String   @id @default(uuid())
+  catalogId   String
+  catalog     Catalog  @relation(fields: [catalogId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+  
+  createdAt   DateTime @default(now())
+}
